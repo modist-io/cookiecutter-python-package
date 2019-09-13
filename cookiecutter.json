@@ -1,0 +1,41 @@
+{
+    "project_title": "",
+    "project_description": "",
+    "author": "Modist Team",
+    "email": "admin@modist.io",
+    "year": "{% now 'local', '%Y' %}",
+    "project_slug": "{{ cookiecutter.project_title.lower().replace(' ', '-') }}",
+    "package_name": "{{ cookiecutter.project_slug.replace('-', '_') }}",
+    "package_version": "0.0.0",
+    "package_license": [
+        "ISC",
+        "MIT"
+    ],
+    "package_keywords": "{{ cookiecutter.project_title }}",
+    "package_platform": [
+        "any",
+        "Linux",
+        "MacOS",
+        "Windows"
+    ],
+    "github_username": "modist-io",
+    "github_url": "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}",
+    "licenses": {
+        "MIT": {
+            "name": "MIT License",
+            "url": "https://choosealicense.com/licenses/mit",
+            "classifier": "License :: OSI Approved :: MIT License",
+            "content": "MIT License\n\nCopyright (c) {{ cookiecutter.year }}, {{ cookiecutter.author }} <{{ cookiecutter.email }}>\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n"
+        },
+        "ISC": {
+            "name": "ISC License",
+            "url": "https://choosealicense.com/licenses/isc",
+            "classifier": "License :: OSI Approved :: ISC License (ISCL)",
+            "content": "ISC License\n\nCopyright (c) {{ cookiecutter.year }}, {{ cookiecutter.author }} <{{ cookiecutter.email }}>\n\nPermission to use, copy, modify, and/or distribute this software for any\npurpose with or without fee is hereby granted, provided that the above\ncopyright notice and this permission notice appear in all copies.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\" AND THE AUTHOR DISCLAIMS ALL WARRANTIES\nWITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF\nMERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR\nANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES\nWHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN\nACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF\nOR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.\n\n"
+        }
+    },
+    "_copy_without_render": [
+        "tasks/CHANGELOG.rst.jinja2",
+        ".github/**/*"
+    ]
+}
