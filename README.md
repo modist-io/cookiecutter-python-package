@@ -109,6 +109,8 @@ Available tasks:
 A couple caveats do exist with the resulting generated package.
 Please take note of these to avoid initial confusion:
 
+- This template is **very much** aimed towards build packages branded and licensed by the Modist team.
+    So if you want to utilize the same tooling we do for our packages, you might want to fork this repository and play with some of the defaults in `cookiecutter.json`.
 - A `requirements.txt` file is required for Read The Docs (`.readthedocs.yml`), however one is not generated or supplied by default.
     As project dependencies change, this file will need to be **manully** regenerated.
     We have provided a quick task that basically will generate this file for you:
