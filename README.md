@@ -111,6 +111,9 @@ Please take note of these to avoid initial confusion:
 
 - This template is **very much** aimed towards build packages branded and licensed by the Modist team.
     So if you want to utilize the same tooling we do for our packages, you might want to fork this repository and play with some of the defaults in `cookiecutter.json`.
+- In order for Github CI (actions) to properly work, several [Github secrets](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) need to be added to the Github repository:
+    - `CODECOV_TOKEN` - The token used for reporting coverage to [Codecov](https://codecov.io), you can find the relevant token at `https://codecov.io/gh/<GITHUB-USERNAME>/<GITHUB-REPOSITORY-NAME>/settings`
+    - `CODACY_PROJECT_TOKEN` - The coverage token for the [Codacy](codacy.com) app, you can find the relevant token at `https://app.codacy.com/manual/<GITHUB-USERNAME>/<GITHUB-REPOSITORY-NAME>/settings/coverage`
 - A `requirements.txt` file is required for Read The Docs (`.readthedocs.yml`), however one is not generated or supplied by default.
     As project dependencies change, this file will need to be **manully** regenerated.
     We have provided a quick task that basically will generate this file for you:
