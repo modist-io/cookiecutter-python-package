@@ -19,6 +19,7 @@ vprof = "*"
 mypy = "*"
 pytype = "*"
 pre-commit = "*"
+pyprof2calltree = "*"
 readme_renderer = {version = "*", extras = ["md"]}
 pip-licenses = "*"
 rope = "*"
