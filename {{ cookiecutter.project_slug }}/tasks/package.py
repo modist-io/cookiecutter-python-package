@@ -118,15 +118,29 @@ def licenses(
 
 
 @invoke.task
-def version(ctx, version=None, force=False):
+def version(ctx, identifier="patch", version=None, force=False):
     """ Specify a new version for the package.
 
-    .. important:: If no version is specified, will take the most recent parsable git
-        tag and bump the patch number.
+    .. important:: The identifier property can be one of the following strings:
 
+        - major
+        - minor
+        - patch
+
+        Which will subsequently bump the indicated semver version index. If no version
+        is specified, this task will bump the patch number from the most recent git tag.
+
+    :param str identifier: The semver identifier to bump the new version with
     :param str version: The new version of the package.
     :param bool force: If True, skips version check
     """
+
+    valid_semver_identifiers = ["major", "minor", "patch"]
+    semver_identifier = (
+        identifier.strip().lower()
+        if isinstance(identifier, str)
+        else valid_semver_identifiers[-1]
+    )
 
     # define replacement strategies for files where the version needs to be in sync
     updates = {
@@ -148,9 +162,16 @@ def version(ctx, version=None, force=False):
             report.error(ctx, "package.version", error_message)
             raise ValueError(error_message)
     else:
-        version = previous_version.bump_release(index=len(previous_version.release) - 1)
+        release_index = len(previous_version.release) - 1
+        if semver_identifier in valid_semver_identifiers:
+            release_index = valid_semver_identifiers.index(semver_identifier)
+        version = previous_version.bump_release(index=release_index)
 
-    report.info(ctx, "package.version", f"updating version to {version!s}")
+    report.info(
+        ctx,
+        "package.version",
+        f"updating version from {previous_version!s} to {version!s}",
+    )
     for (path, replacements) in updates.items():
         if path.is_file():
             content = path.read_text()
@@ -160,7 +181,9 @@ def version(ctx, version=None, force=False):
                     "package.version",
                     f"applying replacement ({pattern!r}, {sub!r}) to {path!s}",
                 )
-                content = re.sub(pattern, sub.format(version=version), content, re.M)
+                content = re.sub(
+                    pattern, sub.format(version=version), content, flags=re.M
+                )
             path.write_text(content)
 
 
