@@ -54,5 +54,10 @@
 
   [[tool.towncrier.type]]
   directory = 'removal'
-  name = 'Removals and Deprecations'
+  name = 'Removals'
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = 'deprecation'
+  name = 'Deprecations'
   showcontent = true

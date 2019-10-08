@@ -23,6 +23,7 @@ pyprof2calltree = "*"
 readme_renderer = {version = "*", extras = ["md"]}
 pip-licenses = "*"
 rope = "*"
+wheel = "*"
 
 [requires]
 python_version = "3.7"
