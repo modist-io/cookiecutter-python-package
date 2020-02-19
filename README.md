@@ -25,6 +25,8 @@ This template will:
 4. Install and initialize environments for necessary pre-commit hooks
 5. Add all generated files to an initial commit and prompt the user to enter a valid commit message
 
+> To learn more about the generated structure and tooling provided in this cookiecutter project template, please read through the provided [Python Project Structure](./STRUCTURE.md) documentation.
+
 ### Installing Dependencies
 
 Because we are trying to build a packaged project, we need to install specific packages in different ways (since Python's package management structure sucks).
