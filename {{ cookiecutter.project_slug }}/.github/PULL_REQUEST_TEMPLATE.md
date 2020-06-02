@@ -34,7 +34,6 @@
 ## PR Checklist
 
 - [ ]  I am merging from a `feature/`, `bugfix/`, `hotfix/`, etc. prefixed branch 🌱
-- [ ]  I am not merging into `master` (unless this is a `hotfix/`) 🌳
 - [ ]  I made sure to add a news fragment for the changes proposed 🗞
 - [ ]  I made sure to add [closing keywords](https://help.github.com/en/articles/closing-issues-using-keywords) to close related issues 👍
 - [ ]  I made sure to drink a glass of water 🥛

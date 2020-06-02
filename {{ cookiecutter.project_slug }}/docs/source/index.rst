@@ -21,6 +21,7 @@ User Documentation
    getting-started
    contributing
    changelog
+   license
 
 
 Project Reference

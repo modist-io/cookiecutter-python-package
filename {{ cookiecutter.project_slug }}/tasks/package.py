@@ -1,19 +1,21 @@
-# Copyright (c) 2018 Stephen Bunn <stephen@bunn.io>
+# -*- encoding: utf-8 -*-
+# Copyright (c) 2020 Modist Team <admin@modist.io>
 # ISC License <https://opensource.org/licenses/isc>
 
+"""Contains Invoke task functions for package building and testing."""
+
+
 import re
-import shutil
 
 import invoke
 import parver
 
-from .utils import report, get_previous_version
+from .utils import get_previous_version, report
 
 
 @invoke.task
 def test(ctx, verbose=False):
-    """ Run package tests.
-    """
+    """Run package tests."""
 
     test_command = "pytest"
     report.info(ctx, "package.test", "running package tests")
@@ -24,8 +26,7 @@ def test(ctx, verbose=False):
 
 @invoke.task
 def clean(ctx):
-    """ Clean previously built package artifacts.
-    """
+    """Clean previously built package artifacts."""
 
     clean_command = "python setup.py clean"
     report.info(ctx, "package.clean", "cleaning up built package artifacts")
@@ -42,8 +43,7 @@ def clean(ctx):
 
 @invoke.task
 def format(ctx):
-    """ Auto format package source files.
-    """
+    """Auto format package source files."""
 
     isort_command = f"isort -rc {ctx.package.directory!s}"
     black_command = f"black {ctx.package.directory.parent!s}"
@@ -56,8 +56,7 @@ def format(ctx):
 
 @invoke.task()
 def requirements(ctx):
-    """ Generate requirements.txt from Pipfile.lock.
-    """
+    """Generate requirements.txt from Pipfile.lock."""
 
     report.info(
         ctx, "package.requirements", "generating requirements.txt from Pipfile.lock"
@@ -67,8 +66,7 @@ def requirements(ctx):
 
 @invoke.task(pre=[clean, format])
 def build(ctx):
-    """ Build pacakge source files.
-    """
+    """Build pacakge source files."""
 
     build_command = "python setup.py sdist bdist_wheel"
     report.info(ctx, "package.build", "building package")
@@ -77,8 +75,7 @@ def build(ctx):
 
 @invoke.task(pre=[build])
 def check(ctx):
-    """ Check built package is valid.
-    """
+    """Check built package is valid."""
 
     check_command = f"twine check {ctx.directory!s}/dist/*"
     report.info(ctx, "package.check", "checking package")
@@ -94,8 +91,7 @@ def licenses(
     with_authors=False,
     with_urls=False,
 ):
-    """ List dependency licenses.
-    """
+    """List dependency licenses."""
 
     licenses_command = "pip-licenses --order=license"
     report.info(ctx, "package.licenses", "listing licenses of package dependencies")
@@ -119,7 +115,7 @@ def licenses(
 
 @invoke.task
 def version(ctx, identifier="patch", version=None, force=False):
-    """ Specify a new version for the package.
+    """Specify a new version for the package.
 
     .. important:: The identifier property can be one of the following strings:
 
@@ -189,22 +185,19 @@ def version(ctx, identifier="patch", version=None, force=False):
 
 @invoke.task
 def stub(ctx):
-    """ Generate typing stubs for the package.
-    """
+    """Generate typing stubs for the package."""
 
-    report.info(ctx, "package.stub", f"generating typing stubs for package")
+    report.info(ctx, "package.stub", "generating typing stubs for package")
     ctx.run(
         f"stubgen --include-private --no-import "
         f"--output {ctx.directory.joinpath('stubs')!s} "
-        f"--search-path {ctx.directory.joinpath('src')!s} "
-        f"--package {ctx.metadata['package_name']}"
+        f"{ctx.directory.joinpath('src')!s}/{ctx.metadata['package_name']}"
     )
 
 
 @invoke.task(pre=[stub])
 def typecheck(ctx):
-    """ Run type checking with generated package stubs.
-    """
+    """Run type checking with generated package stubs."""
 
-    report.info(ctx, "package.typecheck", f"typechecking package")
+    report.info(ctx, "package.typecheck", "typechecking package")
     ctx.run(f"mypy {ctx.package.directory!s}")

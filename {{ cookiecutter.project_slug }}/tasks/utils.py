@@ -1,13 +1,16 @@
-# Copyright (c) 2018 Stephen Bunn <stephen@bunn.io>
+# -*- encoding: utf-8 -*-
+# Copyright (c) 2020 Modist Team <admin@modist.io>
 # ISC License <https://opensource.org/licenses/isc>
+
+"""Contains Invoke utilities."""
 
 import getpass
 import pathlib
 import subprocess
 
-import parver
 import colorama
-from towncrier._builder import find_fragments, split_fragments, render_fragments
+import parver
+from towncrier._builder import find_fragments, render_fragments, split_fragments
 from towncrier._settings import load_config
 
 colorama.init()
@@ -18,6 +21,7 @@ reset = colorama.Style.RESET_ALL
 
 
 class report(object):
+    """Quick-n-dirty console reporting."""
 
     fg = colorama.Fore
     bg = colorama.Back
@@ -44,30 +48,44 @@ class report(object):
 
     @classmethod
     def info(cls, ctx, task_name, text):
+        """Log an info-level console message."""
+
         print(cls._get_text(ctx, "info", task_name, text))
 
     @classmethod
     def debug(cls, ctx, task_name, text):
+        """Log an debug-level console message."""
+
         print(cls._get_text(ctx, "debug", task_name, text))
 
     @classmethod
     def warning(cls, ctx, task_name, text):
+        """Log an warning-level console message."""
+
         print(cls._get_text(ctx, "warning", task_name, text))
 
     @classmethod
     def warn(cls, ctx, task_name, text):
+        """Log an warning-level console message."""
+
         cls.warning(ctx, task_name, text)
 
     @classmethod
     def error(cls, ctx, task_name, text):
+        """Log an error-level console message."""
+
         print(cls._get_text(ctx, "error", task_name, text))
 
     @classmethod
     def success(cls, ctx, task_name, text):
+        """Log an success-level console message."""
+
         print(cls._get_text(ctx, "success", task_name, text))
 
 
 def get_previous_version(ctx):
+    """Get the preivous git-tagged version of the package."""
+
     tags = [
         tag.strip()
         for tag in subprocess.check_output(["git", "tag"], encoding="ascii").split("\n")
@@ -80,6 +98,8 @@ def get_previous_version(ctx):
 
 
 def get_tag_content(ctx):
+    """Get the Towncrier newsfragments tagged content."""
+
     config = load_config(ctx.directory.as_posix())
     definitions = config["types"]
 
@@ -101,12 +121,16 @@ def get_tag_content(ctx):
 
 
 def get_artifact_paths(ctx):
+    """Get all artifacts for built package."""
+
     return [ctx.directory.joinpath(_) for _ in (ctx.directory / "dist").iterdir()]
 
 
 def get_username_password(
     ctx, username_label: str = "Username: ", password_label: str = "Password: "
 ):
+    """Prompt for username and password for some kind of basic-auth."""
+
     while True:
         username = input(report._get_text(ctx, "success", "publish", username_label))
         if len(username) <= 0:
